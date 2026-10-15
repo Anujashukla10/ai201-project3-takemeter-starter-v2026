@@ -68,34 +68,63 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+## Label Taxonomy
 
-**Definition:**
+Three labels. Posts that are **only** a joke, **only** a question, a bot/deleted comment, or under five words are **excluded** when collecting, not labelled. They are common in r/gaming, but none of the three labels fits them, and a fourth "other" label would be a junk drawer.
 
-**Example 1:**
->
+### `analysis`
 
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** Makes a point about a game, studio, or the industry that is backed by at least one specific, checkable fact (a price, date, number, patch note, or named event), and the fact does real work in the argument.
 
 **Example 1:**
+> Sorry but the idea behind the concept of EA when it began was to let players purchase the game at a significant discount, proportional to the game's stage of development, as a way to compensate them. It was a win win deal.
 >
+> For exemple Alpha Minecraft had a 50% discount and Beta Minecraft had a 25% discount.
+>
+> The devs are now used to make the player pay the full price for a half baked game, where is the win win deal ? There is no incentives for them to finish the game anymore. This is borderline anti-consumer practice.
+>
+> I'm sorry "it's an EA" is not a shield against any criticisms, even more when players paid the full price. They are entitled to put pressure on the devs to release the full game as a reasonable pace.
 
 **Example 2:**
+> PopCap got bought by EA right at the peak of the Facebook gaming era. They then converted every single game in progress into the most greedy money begging game possible, turned a family friendly franchise into an FPS, and then bailed on all of the PopCap IP right when mobile gaming was getting big. All of those less-popular games like Alchemy or Mummy Maze or Popcorn Dragon would have made a killing as tiny polished mobile games.
 >
+> I'm only a little salty.
+
+### `hot_take`
+
+**Definition:** A confident general claim about a game, studio, players, or the industry, with no specific checkable fact offered to support it — it might be true, but it isn't backed up.
+
+**Example 1:**
+> Early access is just a term that companies love to use to deflect any blame for how broken the game is
+
+**Example 2:**
+> Catering to the whales is a death sentence.
+
+### `reaction`
+
+**Definition:** The writer's own feeling, experience, or memory of playing or watching something — it is about the writer, not a claim about the world.
+
+**Example 1:**
+> I just had a small panic attack as soon as I recognized that ugly ass frog.
+
+**Example 2:**
+> After not beating it as a kid, I bought it on steam as an adult and beat it. I was so proud of myself.
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** `analysis` vs `hot_take`.
+
+**The borderline post:**
+> Releasing games before they're finished is the entire point of EA. Its purpose is to get funding while receiving feedback from players.
+>
+> You pay to become a QA/beta tester. Idk why anyone expects an early access game to be anywhere near complete.
+
+It gives a reason, so it reads like an argument. But nothing in it can be checked: no number, date, price, or named event.
 
 **The decision rule I used every time:**
-<!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
-     if the tone is heated." -->
+A post is `analysis` only if it contains at least one specific fact a stranger could look up (a number, price, date, patch note, or named event) **and** its conclusion depends on that fact. Reasoning alone, however long or sensible, is `hot_take`. A fact used only as decoration on a conclusion already reached is also `hot_take`. So the borderline post above is `hot_take`.
 
+**Second rule (reaction vs hot_take):** Ask "is this about the writer, or about the world?" If it reports what the writer felt, did, or remembers, it's `reaction`, even if it includes a number about themselves ("After 18hrs I'm considering it a loss"). If it makes a general claim others could agree or disagree with ("This game is dead"), it's `hot_take`. If a post does both, label it by whichever part takes up more of the words.
 
 
 ---
