@@ -42,7 +42,21 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
+**Community:** r/gaming (public subreddit, general gaming discussion — not tied to one game or release).
 
+**What I read:** about 40 comments across four threads — a nostalgia post about Zuma, and the comment sections of three trailer posts (Hytale Early Access Chapter I, Where Dolls Hang, WARDOGS Season 02).
+
+**Candidate distinctions I saw in the text:**
+
+1. **Some comments cite a specific, checkable fact; most don't.** e.g. "For example Alpha Minecraft had a 50% discount and Beta Minecraft had a 25% discount", "Getting to level 20 took like 10-12 hours of playtime", "PopCap got bought by EA right at the peak of the Facebook gaming era." These use the fact to make a point.
+
+2. **Many comments are confident general claims with no support at all.** e.g. "Early access is fake", "Catering to the whales is a death sentence", "Looks fairly mid. Nothing here makes me want to wishlist it." Stated as obvious, never argued.
+
+3. **Many comments are personal feelings or memories, not claims about the world.** e.g. "I just had a small panic attack as soon as I recognized that ugly ass frog", "My grandpa loved this game when I was a kid", "lol I'm only level 20 wtf". In r/gaming these are often nostalgia, not just reactions to something that happened today.
+
+4. **A big chunk of comments are jokes or simple questions with no claim at all.** Jokes: "i read that as 'where dongs hang'", "*ribbit*". Questions: "Linux support yet?", "Is there finally new content?" These may need their own label or may need to be excluded.
+
+**Other things I noticed:** trailer threads are full of very short, low-effort comments and some deleted/empty or bot comments, which I'll skip when collecting. Ads appear between comments and are not posts.
 
 ---
 
