@@ -51,62 +51,43 @@ whether you hit them:
 
 ---
 
-## 1.
+## 1. Overall accuracy
 
-<!-- Your criterion. It must name a number. -->
+Overall accuracy on the held-out test split is at least 0.65 on all three seeds (42, 7, 2024).
 
-
-
-**Why this target:**
-
-
+**Why this target:** There are three labels, so random guessing has an expected accuracy of about 0.33. I chose 0.65 because the model should perform substantially better than guessing. Gaming posts can mix arguments with strong opinions, so distinguishing `analysis` from `hot_take` may be difficult. I also want a target that is challenging without expecting near-perfect predictions from only about 200 posts.
 
 ---
 
-## 2.
+## 2. Per-label performance
 
-<!-- Your criterion. -->
+Every label (`analysis`, `hot_take`, `reaction`) has an F1 score of at least 0.50 on the held-out test split, on all three seeds (42, 7, 2024).
 
-
-
-**Why this target:**
-
-
+**Why this target:** `analysis` may be the least common label because fewer gaming comments provide a specific, checkable fact (a price, date, number, or patch note) than simply express an opinion or reaction. With only around 30 test posts, a few classification errors can significantly affect a label's F1 score. A minimum of 0.50 requires the model to recognize every label reasonably well rather than succeeding mainly on the easier `reaction` posts.
 
 ---
 
-## 3.
+## 3. Balance
 
-<!-- Your criterion. -->
+In `labels.csv`, no label accounts for more than 45% of the rows, and no label accounts for less than 20%.
 
-
-
-**Why this target:**
-
-
+**Why this target:** Gaming discussions often contain many short reactions and confident opinions, while detailed analysis may be less common. If one label dominates the dataset, the model could learn to favor that label instead of learning meaningful differences between all three. These limits aim to provide enough examples of `analysis`, `hot_take`, and `reaction` to train and evaluate the classifier.
 
 ---
 
-## 4.
+## 4. Consistency
 
-<!-- Your criterion. -->
+My agreement rate with the staff labels on the 30 staff posts, calculated using `agreement.py`, is at least 75%.
 
-
-
-**Why this target:**
-
-
+**Why this target:** The distinction between `analysis` and `hot_take` can be difficult because a confident gaming opinion may include a statistic, a specific game mechanic, or a reference to a match without actually supporting its argument. I chose 75% because I want to apply the labeling rules consistently while allowing for genuinely ambiguous posts. The staff posts come from a running forum, but staff rule 1 (does the fact carry the argument?) is the same boundary as my `analysis` vs `hot_take` rule, so this checks whether I apply that kind of rule consistently. If my agreement is lower, my own 200 labels are probably inconsistent on that boundary too.
 
 ---
 
-## 5.
+## 5. Confidence
 
-<!-- Your criterion. -->
+`accuracy_most_confident_third` minus `accuracy_least_confident_third` in `results.json` is at least 0.15 on all three seeds (42, 7, 2024).
 
-
-
-**Why this target:**
-
+**Why this target:** I want the model's confidence scores to provide useful information about the reliability of its predictions. Short `reaction` posts may contain obvious emotional language, while `analysis` and `hot_take` can overlap in gaming discussions. A difference of at least 0.15 would indicate that the model performs noticeably better on its most-confident predictions than on its least-confident predictions. 
 
 
 ---
