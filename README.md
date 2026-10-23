@@ -42,9 +42,9 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-**Community:** r/gaming (public subreddit, general gaming discussion — not tied to one game or release).
+TakeMeter sorts comments from **r/gaming** (a public, general gaming subreddit — not tied to one game or release) into three labels: `analysis` (a point backed by a specific, checkable fact), `hot_take` (a confident claim with no support), and `reaction` (the writer's own feelings, experience, or memories). The goal is to separate the comments that actually argue from evidence from the much more common confident opinions and personal reactions. Pure jokes, pure questions, deleted/bot comments, and posts under five words are excluded rather than labelled.
 
-**What I read:** about 40 comments across four threads — a nostalgia post about Zuma, and the comment sections of three trailer posts (Hytale Early Access Chapter I, Where Dolls Hang, WARDOGS Season 02).
+**What I read first (Milestone 1):** about 40 comments across four threads — a nostalgia post about Zuma, and the comment sections of three trailer posts (Hytale Early Access Chapter I, Where Dolls Hang, WARDOGS Season 02).
 
 **Candidate distinctions I saw in the text:**
 
@@ -54,9 +54,9 @@
 
 3. **Many comments are personal feelings or memories, not claims about the world.** e.g. "I just had a small panic attack as soon as I recognized that ugly ass frog", "My grandpa loved this game when I was a kid", "lol I'm only level 20 wtf". In r/gaming these are often nostalgia, not just reactions to something that happened today.
 
-4. **A big chunk of comments are jokes or simple questions with no claim at all.** Jokes: "i read that as 'where dongs hang'", "*ribbit*". Questions: "Linux support yet?", "Is there finally new content?" These may need their own label or may need to be excluded.
+4. **A big chunk of comments are jokes or simple questions with no claim at all.** Jokes: "i read that as 'where dongs hang'", "*ribbit*". Questions: "Linux support yet?", "Is there finally new content?" I decided to exclude these rather than add a label for them.
 
-**Other things I noticed:** trailer threads are full of very short, low-effort comments and some deleted/empty or bot comments, which I'll skip when collecting. Ads appear between comments and are not posts.
+**Other things I noticed:** trailer threads are full of very short, low-effort comments and some deleted/empty or bot comments, which I skipped when collecting. Ads appear between comments and are not posts.
 
 ---
 
@@ -67,8 +67,6 @@
 
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
-
-## Label Taxonomy
 
 Three labels. Posts that are **only** a joke, **only** a question, a bot/deleted comment, or under five words are **excluded** when collecting, not labelled. They are common in r/gaming, but none of the three labels fits them, and a fourth "other" label would be a junk drawer.
 
@@ -122,10 +120,13 @@ Three labels. Posts that are **only** a joke, **only** a question, a bot/deleted
 It gives a reason, so it reads like an argument. But nothing in it can be checked: no number, date, price, or named event.
 
 **The decision rule I used every time:**
+<!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
+     if the tone is heated." -->
 A post is `analysis` only if it contains at least one specific fact a stranger could look up (a number, price, date, patch note, or named event) **and** its conclusion depends on that fact. Reasoning alone, however long or sensible, is `hot_take`. A fact used only as decoration on a conclusion already reached is also `hot_take`. So the borderline post above is `hot_take`.
 
 **Second rule (reaction vs hot_take):** Ask "is this about the writer, or about the world?" If it reports what the writer felt, did, or remembers, it's `reaction`, even if it includes a number about themselves ("After 18hrs I'm considering it a loss"). If it makes a general claim others could agree or disagree with ("This game is dead"), it's `hot_take`. If a post does both, label it by whichever part takes up more of the words.
 
+**Third rule (fact-only posts):** A post whose main point is a specific, checkable fact used to inform or correct someone (e.g. "Redfall was made by arkane Austin which already closed in 2024 this is arkane lyon") is `analysis`, even without a longer argument. A number that can't be checked ("For every 1 game it hurts, another 10-20 benefit from it") does not count as a fact.
 
 ---
 
@@ -134,19 +135,22 @@ A post is `analysis` only if it contains at least one specific fact a stranger c
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:**
+**Where the posts came from:** Public comments from six r/gaming threads: a Zuma nostalgia post, three trailer posts (Hytale Early Access Chapter I, Where Dolls Hang, WARDOGS Season 02), a news post about Microsoft possibly shutting down Arkane Lyon, and a news post about a former Xbox VP saying Game Pass cuts into retail sales. I copied the comment pages by hand. The first four threads were mostly reactions and hot takes, so I chose the last two on purpose to find more `analysis` posts.
 
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
 Say so plainly — the disclosure is required, not penalised. -->
+I labelled 20 posts cold first, with no AI and no help, using only my written definitions (`note = cold`). For the remaining 191, Claude extracted the usable comments from the pages I pasted and pre-labelled them using my definitions and decision rules. I then read every pre-labelled row and checked it, correcting the ones I disagreed with (`note = pre-labelled, checked` or `pre-labelled, corrected (was X)`). While collecting I excluded pure jokes, pure questions, deleted/bot comments, ads, and posts under five words.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| hot_take | 82 | 38.9% |
+| reaction | 73 | 34.6% |
+| analysis | 56 | 26.5% |
+| **Total** | 211 | 100% |
+
+No label is above 45% or below 20%, so my balance criterion (criterion 3) is met.
 
 **Three hard cases**
 
@@ -154,25 +158,25 @@ Say so plainly — the disclosure is required, not penalised. -->
      been, and what you chose. These are worth more than the easy 190. -->
 
 **1.**
-> *The post:*
+> *The post:* "It's always a balance between sales potential and financial stability for the devs. … I know a studio owner that went through a gamepass deal. His take on it was that it didn't maximize potential revenue but it absolutely guaranteed that he had paid back his production costs day one. … Things like Hollowknight or Expedition 33 are the game dev equivalent of winning the powerball."
 >
-> *Could have been:*
+> *Could have been:* `analysis` or `hot_take`
 >
-> *I chose, because:*
+> *I chose, because:* `hot_take`. It is carefully argued, but its main evidence is a second-hand story about an unnamed studio owner that nobody can check. Under my decision rule, reasoning without a checkable fact is `hot_take`, however good the reasoning is.
 
 **2.**
-> *The post:*
+> *The post:* "For every 1 game it hurts, another 10-20 benefit from it."
 >
-> *Could have been:*
+> *Could have been:* `analysis` or `hot_take`
 >
-> *I chose, because:*
+> *I chose, because:* `hot_take`. It contains numbers, but they are made up — there is no source and no way to check them. My third rule says a number only counts as a fact if someone could look it up.
 
 **3.**
-> *The post:*
+> *The post:* "I'm pretty sure that Prey (2017) was made by them too. It's a really phenomenal game if you haven't tried it yet."
 >
-> *Could have been:*
+> *Could have been:* `analysis` or `hot_take`
 >
-> *I chose, because:*
+> *I chose, because:* `analysis`. Its main point is a specific, checkable fact (which studio made Prey), so it falls under my fact-only rule. The fact is actually wrong — Prey was made by Arkane Austin, not Lyon — which made me realise my rule says *checkable*, not *correct*. I kept it as `analysis`, because labelling by correctness would mean fact-checking every post, which no labeller could do consistently.
 
 ---
 
@@ -180,17 +184,27 @@ Say so plainly — the disclosure is required, not penalised. -->
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** `distilbert-base-uncased`
 
 **Settings:** <!-- epochs, learning rate, batch size, seed -->
+3 epochs, learning rate 2e-5, batch size 16, max length 128 tokens, seed 42.
 
-**Anything I changed from the defaults, and why:**
+**Device:** `cpu` — PyTorch 2.14.1+cpu, Python 3.13 (x64) running under emulation on a Windows on ARM (Snapdragon) laptop. I had to use the x64 build of Python because the pinned packages (pandas, torch) have no ready-made ARM Windows versions for Python 3.13.
+
+**Anything I changed from the defaults, and why:** Nothing. I kept every default so that next unit's results reflect my data and labels, not tuning.
 
 **Split sizes:** <!-- train / val / test, and per-label counts in the test
 split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
+train 147 · val 32 · test 32 (70/15/15, stratified).
 
+| Label | Train | Val | Test |
+|---|---|---|---|
+| analysis | 39 | 8 | 9 |
+| hot_take | 57 | 13 | 12 |
+| reaction | 51 | 11 | 11 |
 
+Every label has at least 8 posts in the test split, but `analysis` (9) is close, so its F1 will be the jumpiest across seeds next unit.
 
 ---
 
@@ -205,17 +219,17 @@ of next unit's variance. -->
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* I pasted the r/gaming threads I had read and asked Claude to draft label definitions and a decision rule from them, and then to write 8 posts that sit on the boundaries between my labels.
+- *What came back:* Draft definitions for `analysis`, `hot_take`, and `reaction` using real comments as examples, a decision rule for `analysis` vs `hot_take`, and 8 boundary posts.
+- *What I changed:* I labelled the 8 posts myself before looking at the answers and got 6/8. The mixed posts (a general claim plus a personal feeling, or a fact used as decoration) were the hardest, so I kept the "label by whichever part takes up more words" tie-break. While labelling I also added a third rule for fact-only posts, because many r/gaming comments just correct someone with a fact.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Examples of acceptance criteria for a different, made-up community so I could see the format, and then a check of whether my own five criteria could be tested by someone else.
+- *What came back:* Example criteria for a cooking forum, and feedback that three of mine needed wording fixes: a reason that contradicted my own decision rule, a timing problem in the consistency reason, and an unclear subtraction direction in the confidence criterion.
+- *What I changed:* I fixed all three wordings. The numbers (0.65, 0.50, 45%/20%, 75%, 0.15) are mine and did not change.
 
-**Pre-labelling disclosure:**
+**Pre-labelling disclosure:** I labelled 20 posts cold with no AI (rows marked `cold`). Claude extracted the remaining 191 comments from the thread pages I pasted and pre-labelled them using my definitions and rules. I read and checked every one and corrected 24 of them. Every pre-labelled row is marked in the `note` column.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
