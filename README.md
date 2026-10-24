@@ -240,6 +240,8 @@ Every label has at least 8 posts in the test split, but `analysis` (9) is close,
 
 ## Baseline vs. Trained
 
+   **Stretch declared before starting unit 6:** a confidence check, comparing how accurate the model is on its most confident third of predictions vs its least confident third, across all three seeds.
+   
 <!-- Both models on the same posts. `python baseline.py --trained results.json`
      prints this table for you. -->
 
