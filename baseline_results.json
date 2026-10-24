@@ -1,0 +1,194 @@
+{
+  "model": "facebook/bart-large-mnli",
+  "n": 32,
+  "seed": 42,
+  "held_out": true,
+  "used_definitions": true,
+  "scores": {
+    "n": 32,
+    "accuracy": 0.28125,
+    "f1_macro": 0.14634146341463414,
+    "per_label": {
+      "analysis": {
+        "precision": 0.28125,
+        "recall": 1.0,
+        "f1": 0.43902439024390244,
+        "support": 9
+      },
+      "hot_take": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 12
+      },
+      "reaction": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 11
+      }
+    }
+  },
+  "predictions": [
+    {
+      "text": "Catering to the whales is a death sentence.",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Blockbuster paid for thousands of those copies of games, most of the time, at higher prices than a consumer paid, they also had revenue sharing with developers and studios. If a game was doing well at blockbuster, the studios got more.",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Yeah that\u2019s why I haven\u2019t been playing until wipe tbh. I don\u2019t want to treat it like a job just to then be reset only a month into the games life span",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "No, they won't. They explicitly said nothing in EA will be monetized. If it is, they straight up lied multiple times on official communications about this.",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "There are low level lobbies you can play or you can ask higher lvl players to get you what you want to try. But if you aren't having fun don't play",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Sony didn't buy a bunch of independent studios and publishers that were previously self sustaining. They bought/created new studios or studios they had been funding themselves for a very long time. Xbox bought multiple publishers and developers that existed with no attachment to Xbox And it should be obvious Arkane has no chance of survival and might as well be shut down. They're just doing it for PR to fool people like you who tried to give them credit for an empty gesture",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "I remeber trying to get the playable files of a ripped insaniquarium from a computer shop back in the day! It felt like mission impossible hacking scene.... in reality i was just copying a file from the hard drive to a flash stick hahaha",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Their fault. Since Dishonored 1 they really haven't made any successful Games.",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Simon the CEO has said that for the meantime they are going to remain on their 3rd party launcher but will be moving to steam in the future when the game is complete",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "New season starts at 12PM EST incase anyone wondering",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "After not beating it as a kid, I bought it on steam as an adult and beat it. I was so proud of myself.",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "It's not on steam so we forget it existed",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Because you're used to seeing the real dimensions of a Chevy Silverado and this truck had proportions changed enough to be a \"generic truck\" and not a Silverado.",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Are you me?? Most horror games don't phase me too much but dolls freak me out I am so tempted to pick this up for the freak factor",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "The problem is that all of their games after Dishonored 1 were not commercially successful",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Not really the same. Film is closer to gaming than music, but there are still too many differences to copy another industry\u2019s model. For example, music pays artists per stream, but film does not. That difference comes down to how contracts have traditionally worked. Music contracts were based on sales numbers, with labels taking on little risk, so per-stream payments made sense. Film usually works with lump-sum contracts where the studio fronts the costs and hopes to earn it back later. Games are closer to film, but you don't have platforms vying to buy your product towards the end of production. Typically games have target platforms set near the beginning of production. More often than not the publisher of a game dictates the target platforms themselves, rather than shopping their product to various platforms to pick up like in film.",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Progression is twice as fast now. Check patch notes.",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "They didn't make Red Fall. Arkane Lyon and Arkane Austin are 2 different studios.",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "I love these post because all of a sudden redditors become masters at understand the economics of running a video game studio",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "shutting down the dishonored studio while blade is apparently near the end of production is such a weird call. youd think finishing it and shipping it would be the cheaper option really hope someone picks them up, arkane lyon has way too much talent to just disappear",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Please rewatch. You might find they named around 1 valid reason. Wipes haven't been included at all of course. It's just a minor thing really. \ud83d\ude06",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Game pass is amazing for consumers, well at least in the short term. Not so in the long run if smaller or midsize producers go under due to a poor compensation model.",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "It\u2019s not always \u201cthe brand is worthless\u201d. Sometimes it\u2019s \u201cthe profit growth doesn\u2019t meet the arbitrary growth target set by degenerates on Wall Street, so even though it may be profitable it isn\u2019t profitable enough, which is very bad for us\u201d",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "There are people maxed out already. A wipe is sorely needed",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Thanks for the update! Excited for full release myself",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "dude reminds me of the movies growing up puppet masters.",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "it's weird; back when I was a child, I struggled with this game, not being able to go past stage 10 or so. A few years ago I played it again, and beat the game in one sitting, losing only one life in the second-to-last level. Somehow I got good with the years",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "RIP Insaniquarium. That series deserved better. I got it running on my phone via Winlator. as well the The Incredible Machine: Even More Contraptions. and Sierra 3D Ultra Minigolf Deluxe. Lots of great games made back in the day!",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "I probably wont return until they make convoys of vehicles feel useful, and ratting bases not be the optimal play style. for my preferences, I'd rather just play Hell Let Loose",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Cant wait to beat off some hung dolls!! Jokes aside, added to wishlist to see where this goes as it looks decent!",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "PopCap Games not being a huge mobile game dev is just insane to me. You know what I want to play on my phone? Peggle.",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Loved this game back on the 360 along with Puzzle Quest. I still play both on my SX. Edit: It was Jewel Quest.",
+      "gold": "reaction",
+      "predicted": "analysis"
+    }
+  ]
+}

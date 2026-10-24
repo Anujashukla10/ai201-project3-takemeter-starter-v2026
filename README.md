@@ -247,14 +247,16 @@ Every label has at least 8 posts in the test split, but `analysis` (9) is close,
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.281 | 0.500 | +0.219 |
+| Macro F1 | 0.146 | 0.396 | +0.249 |
+| F1 — `analysis` | 0.439 | 0.000 | -0.439 |
+| F1 — `hot_take` | 0.000 | 0.556 | +0.556 |
+| F1 — `reaction` | 0.000 | 0.632 | +0.632 |
 
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
+I expect that the trained model will beat the baseline on reaction and hot_take, but not on analysis.
 
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
