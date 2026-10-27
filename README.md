@@ -253,6 +253,8 @@ Every label has at least 8 posts in the test split, but `analysis` (9) is close,
 | F1 — `hot_take` | 0.000 | 0.556 | +0.556 |
 | F1 — `reaction` | 0.000 | 0.632 | +0.632 |
 
+Both columns are scored on the same 32 held-out posts (`test_split.csv`, seed 42). Baseline: `facebook/bart-large-mnli`, zero-shot, using my definitions from `label_definitions.txt`. Device: `cpu` (torch 2.14.1+cpu).
+
 **What I predicted before I looked:**
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
@@ -261,7 +263,7 @@ I expect that the trained model will beat the baseline on reaction and hot_take,
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
      nothing — and that is a real finding, not a failure. Say it plainly. -->
-
+Fine-tuning helped overall (+0.22 accuracy, +0.25 macro F1), but the two models fail in opposite directions on the same label. The baseline labelled almost every post `analysis`: its 0.281 accuracy is 9/32, exactly the number of `analysis` posts in the test split, so it scored zero on `hot_take` and `reaction`. The trained model learned `hot_take` and `reaction` but never predicted `analysis` at all (F1 0.000). So training taught the model to recognise opinions and personal reactions, but not what makes a post `analysis`. That is the same `analysis` vs `hot_take` boundary I found hardest when labelling.
 
 
 ---
