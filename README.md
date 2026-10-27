@@ -273,6 +273,8 @@ Fine-tuning helped overall (+0.22 accuracy, +0.25 macro F1), but the two models 
 <!-- Five criteria across three seeds. The notebook's section 6 prints the
      spread table; the Target and Verdict columns are yours. -->
 
+Device: `cpu` (torch 2.14.1+cpu). Accuracy moved 0.094 across seeds, under the 10-point instability line.
+
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
 | 1.  |  |  |  |  |  |
@@ -286,18 +288,20 @@ Fine-tuning helped overall (+0.22 accuracy, +0.25 macro F1), but the two models 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
+Seed 42, the first of the three seeds.
+
+| true \ predicted | analysis | hot_take | reaction |
 |---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| **analysis** | 0 | 9 | 0 |
+| **hot_take** | 0 | 10 | 2 |
+| **reaction** | 0 | 5 | 6 |
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
      direction. "7 real analysis posts were called hot_take and only 3 went the
      other way" is a direction, not just an error rate. -->
 
-
+All 9 real `analysis` posts were called `hot_take`, and 0 went the other way, so the model never learned the `analysis` vs `hot_take` boundary at all. It treats every argued post as a hot take, whether or not it contains a checkable fact. The analysis column is empty: the model never predicts `analysis` for anything. The second-largest error is also toward `hot_take` (5 real reactions called `hot_take`), so `hot_take` is the model's default guess whenever it's unsure.
 
 ---
 
