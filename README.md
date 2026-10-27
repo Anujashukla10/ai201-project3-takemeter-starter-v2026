@@ -405,34 +405,51 @@ All 9 real `analysis` posts were called `hot_take`, and 0 went the other way, so
 
 **Which diagnosis pointed at it:** The criterion 2 diagnosis. At epoch 3 the training loss was 0.979, barely below the 1.099 of a model guessing evenly, and validation accuracy was still rising every epoch (0.50 → 0.56 → 0.59). The model stopped before it had learned the `analysis` vs `hot_take` boundary, so more passes over the same data is the most direct test of that diagnosis.
 
+
 ### Run Log — After
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1. Overall accuracy | ≥ 0.65 | ___ | ___ | ___ | ___ |
-| 2. Every label F1 (lowest shown) | ≥ 0.50 | ___ | ___ | ___ | ___ |
+| 1. Overall accuracy | ≥ 0.65 | 0.656 | 0.656 | 0.844 | MET |
+| 2. Every label F1 (lowest shown) | ≥ 0.50 | 0.364 (`analysis`) | 0.462 (`analysis`) | 0.667 (`analysis`) | MISSED |
 | 3. Balance in labels.csv | each label 20–45% | 26.5% – 38.9% | 26.5% – 38.9% | 26.5% – 38.9% | MET |
 | 4. Agreement with staff | ≥ 75% | ___% | ___% | ___% | ___ |
-| 5. Confidence gap | ≥ 0.15 | ___ | ___ | ___ | ___ |
+| 5. Confidence gap (most − least confident third) | ≥ 0.15 | +0.500 | +0.100 | +0.200 | MISSED |
+
+Full after-run spread table (device `cpu`, torch 2.14.1+cpu, EPOCHS = 10):
+
+| Measure | Seed 42 | Seed 7 | Seed 2024 | Spread |
+|---|---|---|---|---|
+| Overall accuracy | 0.656 | 0.656 | 0.844 | 0.188 |
+| Macro F1 | 0.606 | 0.630 | 0.822 | 0.216 |
+| F1 — `analysis` | 0.364 | 0.462 | 0.667 | 0.303 |
+| F1 — `hot_take` | 0.621 | 0.667 | 0.889 | 0.268 |
+| F1 — `reaction` | 0.833 | 0.762 | 0.909 | 0.147 |
 
 **Did it help, and how do I know:**
 <!-- If it didn't, say so. Relabelling that didn't help is a genuinely
      interesting result and earns full credit. -->
-___ (Compare row by row with Run Log — Before. Example: "Partly. Accuracy rose from 0.50/0.53/0.59 to X/Y/Z, and `analysis` F1 rose from 0.00 to … / stayed at 0.00, so the boundary was / was not a training problem.")
+Yes, clearly, on every measure and every seed. Comparing the two run logs row by row: accuracy rose from 0.500 / 0.531 / 0.594 to 0.656 / 0.656 / 0.844, so criterion 1 went from MISSED to MET (though only by 0.006 on two seeds). `analysis` F1 rose from 0.000 on all seeds to 0.364 / 0.462 / 0.667, so the model now predicts `analysis` and gets some right. That confirms the undertraining diagnosis: the boundary was learnable, the model just hadn't trained long enough. Criterion 2 is still MISSED, because `analysis` is below 0.50 on two seeds. The confidence gap became positive on every seed (+0.50 / +0.10 / +0.20, against +0.10 / −0.30 / +0.80 before), so confidence now means something, but seed 7 still misses 0.15.
 
+One honest caveat: the spread across seeds grew. Accuracy now moves 0.188 between seeds (it was 0.094 before), and `analysis` F1 moves 0.303. With only 32 test posts, and 9 of them `analysis`, one or two posts landing in a different split changes the result a lot. So "MET" on criterion 1 is real but fragile, and the dataset is too small for a stable measure of the `analysis` label.
 ---
 
 ## What's Still Broken
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
 
+**Still missed after the improvement:** criterion 2 (every label F1 ≥ 0.50) and criterion 5 (confidence gap ≥ 0.15). Criterion 4 is ___ (see Agreement Report).
+
+- **Criterion 2, `analysis` F1 (0.364 / 0.462 / 0.667):** next I would add about 30 more `analysis` posts from fact-heavy r/gaming threads (sales numbers, prices, patch notes), and relabel the `analysis` vs `hot_take` rows my agreement check showed I apply inconsistently. I stopped because the brief allows one measured improvement per unit, and I used it on training length, which is what my diagnosis pointed at first.
+- **Criterion 5, confidence gap (seed 7 only +0.10):** each third holds only about 10 test posts, so one post changes the accuracy of a third by 0.10. The real fix is more data and a bigger test split, not a model change.
+- **Stability:** accuracy moved 0.188 across seeds after the change. My dataset (211 posts, 32 in test) is too small for a stable measure, which also means my criterion 1 MET verdict is borderline (0.656 against a 0.65 target on two seeds).
 
 
 **The gap between what I meant my labels to capture and what the model
 learned:**
 <!-- Two sentences. Your confusion matrix is the evidence. -->
 
-
+I meant `analysis` to mean "an argument carried by a checkable fact", but the 3-epoch model learned only "short and emotional = `reaction`, anything argued = `hot_take`": all 9 real `analysis` posts in the seed-42 matrix were called `hot_take`, with 0 going the other way. Training longer let it start to pick up the fact-carrying feature (`analysis` F1 up to 0.36–0.67), but it is still the weakest and least stable label, so the model has only partly learned the distinction I cared about most.
 
 <!-- ═════════════════════════════════════════════════════════════════════
 
