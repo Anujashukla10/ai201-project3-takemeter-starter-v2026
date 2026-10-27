@@ -139,7 +139,7 @@ A post is `analysis` only if it contains at least one specific fact a stranger c
 
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
 Say so plainly — the disclosure is required, not penalised. -->
-I labelled 20 posts cold first, with no AI and no help, using only my written definitions (`note = cold`). For the remaining 191, Claude extracted the usable comments from the pages I pasted and pre-labelled them using my definitions and decision rules. I then read every pre-labelled row and checked it, correcting the ones I disagreed with (`note = pre-labelled, checked` or `pre-labelled, corrected (was X)`). While collecting I excluded pure jokes, pure questions, deleted/bot comments, ads, and posts under five words.
+I labelled 20 posts cold first, with no AI and no help, using only my written definitions (`note = cold`). For the remaining 191, Claude extracted the usable comments from the pages I pasted and pre-labelled them using my definitions and decision rules. I then read every pre-labelled row and checked it, correcting the ones I disagreed with (all pre-labelled rows are marked `note = pre-labelled, checked`). While collecting I excluded pure jokes, pure questions, deleted/bot comments, ads, and posts under five words.
 
 **Counts per label:**
 
@@ -233,9 +233,9 @@ Every label has at least 8 posts in the test split, but `analysis` (9) is close,
 
 - *What I asked for:* Help reading my baseline, three-seed and confusion-matrix outputs, and a structure for my verdicts and diagnoses.
 - *What came back:* It pointed out that the baseline's 0.281 accuracy was exactly 9/32 (it labelled everything `analysis`), and that my 3-epoch training loss of 0.979 was close to the 1.099 of a model guessing evenly across 3 labels, which suggested undertraining.
-- *What I changed:* I checked those numbers against my own outputs, chose the epochs change as my one improvement because of that diagnosis, and labelled the 30 staff posts and wrote my agreement calls myself.
+- *What I changed:* I checked those numbers against my own outputs and chose the epochs change as my one improvement because of that diagnosis. I labelled the 30 staff posts myself before seeing the staff labels, and kept my labels unchanged after seeing them. Claude helped me compare the two files and draft the reasoning for each disagreement from the staff rule text; I checked each call against `data/staff_taxonomy.md`.
 
-**Pre-labelling disclosure:** I labelled 20 posts cold with no AI (rows marked `cold`). Claude extracted the remaining 191 comments from the thread pages I pasted and pre-labelled them using my definitions and rules. I read and checked every one and corrected 24 of them. Every pre-labelled row is marked in the `note` column.
+**Pre-labelling disclosure:** I labelled 20 posts cold with no AI (rows marked `cold`). Claude extracted the remaining 191 comments from the thread pages I pasted and pre-labelled them using my definitions and rules. I read and checked every one. I did not record which rows I changed, so every pre-labelled row is marked `pre-labelled, checked` in the `note` column.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
@@ -285,7 +285,7 @@ Device: `cpu` (torch 2.14.1+cpu). 3 epochs. Accuracy moved 0.094 across seeds, u
 | 1. Overall accuracy | ≥ 0.65 | 0.500 | 0.531 | 0.594 | MISSED |
 | 2. Every label F1 (lowest shown) | ≥ 0.50 | 0.000 (`analysis`) | 0.000 (`analysis`) | 0.000 (`analysis`) | MISSED |
 | 3. Balance in labels.csv | each label 20–45% | 26.5% – 38.9% | 26.5% – 38.9% | 26.5% – 38.9% | MET |
-| 4. Agreement with staff | ≥ 75% | ___% | ___% | ___% | ___ |
+| 4. Agreement with staff | ≥ 75% | 60% (18/30) | 60% (18/30) | 60% (18/30) | MISSED |
 | 5. Confidence gap (most − least confident third) | ≥ 0.15 | +0.100 | −0.300 | +0.800 | MISSED |
 
 Criteria 3 and 4 don't depend on the seed, so the same value appears in all three columns.
@@ -333,7 +333,7 @@ Verdicts below are for the **before** run (my criteria as filed in unit 5, no re
 | 1 | Overall accuracy | ≥ 0.65 | MISSED | Best seed was 0.594; none of the three reached 0.65 |
 | 2 | Every label F1 | ≥ 0.50 | MISSED | `analysis` F1 was 0.000 on all three seeds |
 | 3 | Balance | each label 20–45% | MET | Counts are 82/73/56 of 211 (38.9%, 34.6%, 26.5%), fixed for every seed |
-| 4 | Agreement with staff | ≥ 75% | ___ | agreement.py gave ___/30 = ___% |
+| 4 | Agreement with staff | ≥ 75% | MISSED | `agreement.py` gave 18/30 = 60%, below 75% |
 | 5 | Confidence gap | ≥ 0.15 | MISSED | Only seed 2024 cleared it (+0.80); seed 42 was +0.10 and seed 7 was −0.30 |
 
 I revised no criteria.
@@ -352,13 +352,13 @@ I revised no criteria.
 **Criterion 2 (`analysis` F1 0.000) — the root miss. Cause: a genuinely hard label pair, plus an undertrained model.** The model never predicts `analysis` on any seed; the matrices show those posts going to `hot_take` (9/9, 9/9 and 7/9). Too few examples is not the main cause: `analysis` had 39 training posts against 51 for `reaction`, which the model did learn (F1 0.63–0.75). The evidence points elsewhere:
 - **Hard pair.** Both labels are long, argued, opinionated posts. The only difference is whether a checkable fact carries the conclusion — a small, subtle feature to learn from 147 training posts. Even I missed 2 of 8 on the boundary stress test in unit 5 (6/8), and both misses were mixed posts on this kind of boundary.
 - **Undertrained.** Training loss at epoch 3 was 0.979, barely below 1.099 (the loss of a model guessing evenly across 3 labels), and validation accuracy was still rising every epoch (0.50 → 0.56 → 0.59). The model stopped before it learned more than "short and emotional = `reaction`, everything else = `hot_take`".
-- **Labelling or model? (agreement evidence):** ___ of my ___ disagreements with staff were on `analysis` vs `hot_take`. ___ [Pick one: "So I also apply this boundary inconsistently, and part of this miss is my labelling, not just the model." / "So I apply that boundary the same way staff do, which points at the model and training, not my labels."]
+- **Labelling or model? (agreement evidence):** I agreed with staff on only 18/30 posts, and 3 of my 12 disagreements are on exactly this pair: I called sp_003 and sp_006 `hot_take` where staff (correctly, by rule 1) said `analysis`, and I called sp_014 `analysis` where staff said `hot_take`, even though sp_014 is almost word-for-word rule 1's own example of a decorative statistic. So I apply the `analysis` vs `hot_take` boundary inconsistently myself, in both directions. Two of the three go the same way as the model's error (real `analysis` → `hot_take`). That means part of this miss is my labelling, not only the model: if my 211 training labels mix these two the way my 30 staff-set labels did, the model was given a blurry signal for exactly the boundary it failed to learn.
 
 **Criterion 1 (accuracy 0.50–0.59). Cause: follows from criterion 2.** With `analysis` (9 of 32 test posts) always wrong, the best possible accuracy is about 0.72, and every `hot_take`/`reaction` mistake lowers it further. The seed-42 matrix also shows 5 real `reaction` posts called `hot_take`, so `hot_take` is the model's default guess.
 
 **Criterion 5 (confidence gap +0.10 / −0.30 / +0.80). Cause: undertraining plus too little data per third.** In `results_three_seeds_before.json` the model's mean confidence was about 0.40–0.42 whether it was right or wrong (seed 42: 0.418 right vs 0.410 wrong; seed 7: 0.402 vs 0.409). That is barely above the 0.33 of a 3-way guess, so "most confident" and "least confident" barely differ and the gap is noise. Each third also holds only 10 posts, so one post moves a third's accuracy by 0.10 — the noise I warned about in my unit 5 reason.
 
-**Criterion 4.** ___ [If MET: "Met — I matched staff on ___/30." If MISSED: "Missed. ___ of my disagreements were on rule ___, and most fell in pile (a)/(b)/(c), which means ___."]
+**Criterion 4 (agreement 60%, target 75%). Cause: a boundary I applied inconsistently — my own labelling, not ambiguity.** All 12 disagreements are pile (a): the staff rule covered the post and I applied it loosely (see Agreement Report). The strongest evidence that this is carelessness rather than genuinely hard posts: staff marked 7 posts as borderline/hard, and I matched them on 6 of those 7. Eleven of my 12 misses were on posts staff considered *clear*. The biggest cluster is `reaction` → something else: 6 of the 10 staff `reaction` posts (sp_021–026) I called `hot_take` or `analysis`, mostly because a number appeared ("Four minutes off", "Got up at 5", "mile 22") and I treated its presence as a reason instead of asking rule 3's question, whether the fact is load-bearing.
 
 ---
 
@@ -370,7 +370,9 @@ I revised no criteria.
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** ___ / 30 = ___%
+**Agreement rate:** 18 / 30 = 60%
+
+I labelled all 30 posts in `data/staff_posts.csv` under the staff taxonomy (`my_staff_labels.csv`) before receiving `data/staff_labels.csv`, and did not change my labels afterwards. `agreement.py` wrote `agreement_results.json`.
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
@@ -392,25 +394,27 @@ I revised no criteria.
      written rule two different ways on 30 posts, that is direct evidence about
      what you did across your own 200. -->
 
-**1.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
+The 12 disagreements, each argued from the staff rule text:
 
-**2.**
-> *The post:*
->
-> *Staff said / I said:*
->
-> *My call, and why:*
->
-> *Which pile:*
+| # | Post | I said | Staff said | My call, and why (from `staff_taxonomy.md`) | Pile |
+|---|---|---|---|---|---|
+| 1 | sp_002 "I tracked sleep against session quality for eleven weeks…" | `reaction` | `analysis` | Eleven weeks of tracked data carries the conclusion. Rule 3: recency/personal does not outrank evidence, and this isn't even recent | (a) |
+| 2 | sp_003 "The club championship scoring changed in 2019 from top-6 to top-10…" | `hot_take` | `analysis` | Rule 1: the scoring change and the B-team result *are* the argument, not decoration | (a) |
+| 3 | sp_006 "Checked the entry lists. 41% … against 26% five years ago…" | `hot_take` | `analysis` | Rule 1: the 41% vs 26% comparison is the reason for the conclusion | (a) |
+| 4 | sp_007 "Ran the same loop in 4C and in 24C… 90 seconds slower…" | `reaction` | `analysis` | Rule 3: a personal test, but the measured 90 seconds carries the claim about heat | (a) |
+| 5 | sp_013 "The club needs to stop pretending the Tuesday session is for everyone…" | `reaction` | `hot_take` | Rule 2: a general claim about the world, not something that happened to the writer | (a) |
+| 6 | sp_014 "Times are down about 3% since the shoe rules changed, so obviously…" | `analysis` | `hot_take` | Rule 1: almost word-for-word the rule's own example. The 3% decorates a conclusion already reached | (a) |
+| 7 | sp_021 "Four minutes off. FOUR… sat on the kerb outside the finish…" | `hot_take` | `reaction` | Rule 2: reports what just happened to the writer and how it felt; no general claim | (a) |
+| 8 | sp_022 "Got up at 5, drove ninety minutes, and it's cancelled…" | `analysis` | `reaction` | Contains times, but they don't argue anything. It's an immediate personal event | (a) |
+| 9 | sp_023 "First run back after eight weeks out…" | `hot_take` | `reaction` | Rule 2: about the writer's own run today, no claim about the world | (a) |
+| 10 | sp_024 "Watching the last 400 of that and I had to stand up…" | `analysis` | `reaction` | No fact and no argument; an immediate feeling | (a) |
+| 11 | sp_025 "Blew up at 20 with the pace band still in my hand…" | `hot_take` | `reaction` | Rule 2: what just happened to the writer | (a) |
+| 12 | sp_026 "Someone handed my kid an orange slice at mile 22…" | `hot_take` | `reaction` | Rule 2: an immediate personal moment, no general claim | (a) |
+
+In every row, staff is right, and each call is argued from a specific rule rather than "staff is right". I looked for a pile (c) case I could win and didn't find one: the closest is sp_013 ("The club needs to stop pretending the Tuesday session is for everyone"), which sounds like a local complaint the writer feels strongly about, but rule 2 says explicitly that a heated post is still `hot_take` if it makes a general claim, and "it isn't and it never has been" is a general claim. So all 12 are pile (a): the written rule covered the post and I applied it loosely. None are pile (b). Notably, the posts staff flagged as genuinely hard (sp_005, 010, 014, 019, 020, 028, 029) are where I did *best*: I matched 6 of those 7. I lost points on the easy ones.
 
 **What the pattern in my disagreements tells me:**
+My 12 disagreements are spread across every boundary, not just one: 3 are `analysis` vs `hot_take` (sp_003, 006, 014), 4 are `analysis` vs `reaction` (sp_002, 007, 022, 024), and 5 are `reaction` vs `hot_take` (sp_013, 021, 023, 025, 026). Two habits stand out. First, I called short, emotional, first-person race posts `hot_take` (5 times), which is the same `reaction` → `hot_take` direction my 3-epoch model showed (5 real reactions called `hot_take` in the seed-42 matrix). Second, I let the *presence* of numbers decide `analysis` (sp_014, 022) instead of asking whether the number carries the argument, and missed facts that clearly did (sp_002, 003, 006, 007). The second habit is exactly the `analysis` vs `hot_take` boundary the model never learned. So the agreement evidence points at my labelling as part of the cause: the model was trained on labels where I applied my hardest boundary inconsistently. And because I got the hard posts right but the easy ones wrong, the problem is consistency and care, not that the rules are unclear — which is fixable by relabelling with the rule questions written next to me.
 
 
 
@@ -429,8 +433,10 @@ I revised no criteria.
 | 1. Overall accuracy | ≥ 0.65 | 0.656 | 0.656 | 0.844 | MET |
 | 2. Every label F1 (lowest shown) | ≥ 0.50 | 0.364 (`analysis`) | 0.462 (`analysis`) | 0.667 (`analysis`) | MISSED |
 | 3. Balance in labels.csv | each label 20–45% | 26.5% – 38.9% | 26.5% – 38.9% | 26.5% – 38.9% | MET |
-| 4. Agreement with staff | ≥ 75% | ___% | ___% | ___% | ___ |
+| 4. Agreement with staff | ≥ 75% | 60% (18/30) | 60% (18/30) | 60% (18/30) | MISSED |
 | 5. Confidence gap (most − least confident third) | ≥ 0.15 | +0.500 | +0.100 | +0.200 | MISSED |
+
+Criterion 4 measures my labelling, not the model, so the epochs change could not affect it.
 
 Full after-run spread table (device `cpu`, torch 2.14.1+cpu, EPOCHS = 10):
 
@@ -478,7 +484,9 @@ Are the model's confident predictions right more often than its unsure ones? Acc
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
 
-**Still missed after the improvement:** criterion 2 (every label F1 ≥ 0.50) and criterion 5 (confidence gap ≥ 0.15). Criterion 4 is ___ (see Agreement Report).
+**Still missed after the improvement:** criterion 2 (every label F1 ≥ 0.50), criterion 4 (agreement 60% vs 75%) and criterion 5 (confidence gap ≥ 0.15).
+
+- **Criterion 4, agreement (60%):** the fix is in my labelling habits, not the model. Next time I would label with two questions written next to me — "does the fact carry the argument?" and "is this about the writer just now, or about the world?" — and re-check my own 211 rows the same way, especially short first-person posts that contain a number. I stopped because changing my labels counts as a second change, and the brief allows one improvement per unit.
 
 - **Criterion 2, `analysis` F1 (0.364 / 0.462 / 0.667):** the model now has high precision but low recall on `analysis` (seed 42: 1.00 precision, 0.22 recall). Next I would add about 30 more `analysis` posts from fact-heavy r/gaming threads (sales numbers, prices, patch notes), and re-check the `analysis` vs `hot_take` rows in my labels using the agreement findings. I stopped because the brief allows one measured improvement per unit, and I used it on training length, which is what my diagnosis pointed at first.
 - **Criterion 5, confidence gap (seed 7 only +0.10):** each third holds only 10 test posts, so one post changes a third's accuracy by 0.10. The real fix is more data and a bigger test split, not a model change.
