@@ -277,11 +277,13 @@ Device: `cpu` (torch 2.14.1+cpu). Accuracy moved 0.094 across seeds, under the 1
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.65 | 0.500 | 0.531 | 0.594 | MISSED |
+| 2. Every label F1 (lowest shown) | ≥ 0.50 | 0.000 (`analysis`) | 0.000 (`analysis`) | 0.000 (`analysis`) | MISSED |
+| 3. Balance in labels.csv | each label 20–45% | 26.5% – 38.9% | 26.5% – 38.9% | 26.5% – 38.9% | MET |
+| 4. Agreement with staff | ≥ 75% | ___% | ___% | ___% | ___ |
+| 5. Confidence gap (most − least confident third) | ≥ 0.15 | +0.100 | −0.300 | +0.800 | MISSED |
+
+Criteria 3 and 4 don't depend on the seed, so the same value appears in all three columns. Device: `cpu`, torch 2.14.1+cpu.
 
 ### Confusion matrix
 
@@ -312,11 +314,11 @@ All 9 real `analysis` posts were called `hot_take`, and 0 went the other way, so
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Overall accuracy | ≥ 0.65 | MISSED | Best seed was 0.594; none of the three reached 0.65 |
+| 2 | Every label F1 | ≥ 0.50 | MISSED | `analysis` F1 was 0.000 on all three seeds |
+| 3 | Balance | each label 20–45% | MET | Counts are 82/73/56 of 211 (38.9%, 34.6%, 26.5%), fixed for every seed |
+| 4 | Agreement with staff | ≥ 75% | ___ | agreement.py gave ___/30 |
+| 5 | Confidence gap | ≥ 0.15 | MISSED | Only seed 2024 cleared it (+0.80); seed 42 was +0.10 and seed 7 was −0.30 |
 
 **Diagnoses**
 
@@ -329,6 +331,16 @@ All 9 real `analysis` posts were called `hot_take`, and 0 went the other way, so
      have that can tell a LABELLING problem from a MODEL problem, and this
      section is graded on whether you used it that way. -->
 
+**Criterion 2 (`analysis` F1 0.000), the root miss.** The model never predicts `analysis` on any seed. The seed 42 matrix shows where those posts go: all 9 real `analysis` posts were called `hot_take`, and 0 `hot_take` posts went the other way. So the model has not learned the `analysis` vs `hot_take` boundary at all. Too few examples is not the main cause: `analysis` had 39 training posts, against 51 for `reaction`, which the model learned (F1 0.63–0.75). Three things point instead at a genuinely hard pair plus an undertrained model:
+- Both labels are long, argued, opinionated posts. The only difference is whether a checkable fact carries the conclusion, and that is a small, subtle feature for 147 training posts. I scored only 4/8 myself on the boundary stress test in unit 5.
+- The training loss at epoch 3 was 0.979, barely below 1.099, the loss of a model guessing evenly across 3 labels. Validation accuracy was still rising every epoch (0.50 → 0.56 → 0.59). The model stopped training before it had learned much beyond "short emotional post = `reaction`, everything else = `hot_take`".
+- Agreement evidence: ___ (fill in after agreement.py, e.g. "X of my Y disagreements with staff were on analysis vs hot_take, so I also apply this boundary inconsistently, which means part of this is my labelling").
+
+**Criterion 1 (accuracy 0.50–0.59).** This follows from criterion 2. With `analysis` (28% of the test split) always wrong, the best possible accuracy is about 0.72, and every `hot_take`/`reaction` mistake lowers it further. The seed-42 matrix also shows 5 real `reaction` posts called `hot_take`, so `hot_take` is the model's default guess.
+
+**Criterion 5 (confidence gap).** The gaps were +0.10, −0.30 and +0.80, so the model's confidence is not reliable. Each third holds only about 10 posts, so one or two posts swing the number by 0.1–0.2, which is the noise I warned about in my unit 5 reason. The underlying cause is again undertraining: with loss near chance, the model's confidence scores are all close together, so "most confident" and "least confident" barely differ.
+
+**Criterion 4.** ___ (fill in after agreement.py. If MISSED: which staff rule my disagreements cluster on, and which pile most of them fall in.)
 
 
 ---
@@ -389,26 +401,24 @@ All 9 real `analysis` posts were called `hot_take`, and 0 went the other way, so
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** One training setting: `EPOCHS` from 3 to 10. Same data, same labels, same seeds (42, 7, 2024), same learning rate (2e-5), batch size (16) and max length (128).
 
-**Which diagnosis pointed at it:**
+**Which diagnosis pointed at it:** The criterion 2 diagnosis. At epoch 3 the training loss was 0.979, barely below the 1.099 of a model guessing evenly, and validation accuracy was still rising every epoch (0.50 → 0.56 → 0.59). The model stopped before it had learned the `analysis` vs `hot_take` boundary, so more passes over the same data is the most direct test of that diagnosis.
 
 ### Run Log — After
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall accuracy | ≥ 0.65 | ___ | ___ | ___ | ___ |
+| 2. Every label F1 (lowest shown) | ≥ 0.50 | ___ | ___ | ___ | ___ |
+| 3. Balance in labels.csv | each label 20–45% | 26.5% – 38.9% | 26.5% – 38.9% | 26.5% – 38.9% | MET |
+| 4. Agreement with staff | ≥ 75% | ___% | ___% | ___% | ___ |
+| 5. Confidence gap | ≥ 0.15 | ___ | ___ | ___ | ___ |
 
 **Did it help, and how do I know:**
-
 <!-- If it didn't, say so. Relabelling that didn't help is a genuinely
      interesting result and earns full credit. -->
-
-
+___ (Compare row by row with Run Log — Before. Example: "Partly. Accuracy rose from 0.50/0.53/0.59 to X/Y/Z, and `analysis` F1 rose from 0.00 to … / stayed at 0.00, so the boundary was / was not a training problem.")
 
 ---
 
